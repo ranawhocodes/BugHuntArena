@@ -40,7 +40,27 @@
 - **Open Issues:** None
 
 ## Brick 2: Content Schema, Validator & 24 Verified Puzzles
-- **Status:** In Progress
+- **Status:** Complete ✅
 - **Started:** 2026-10-08 11:51 IST
+- **Completed:** 2026-10-08 11:57 IST
+- **Decisions:**
+  - Strict TypeScript schema for `BugPuzzle`, `FixOption`, `BugCategory`, and `BugCreature`
+  - 12 verified Python puzzles + 12 verified JavaScript puzzles = 24 total
+  - Pure `validatePuzzle()` validator enforcing ≤ 60 chars per line, 4 options, 3 escalating hints, and named creatures
+  - Zero `any` types throughout content system
+- **Done:**
+  - [x] Schema & types (`src/content/types.ts`)
+  - [x] Pure validator (`src/content/validator.ts`)
+  - [x] 12 Python puzzles (`src/content/puzzles/python.ts`)
+  - [x] 12 JavaScript puzzles (`src/content/puzzles/javascript.ts`)
+  - [x] Puzzle index & lookups (`src/content/puzzles/index.ts`)
+  - [x] 8 new content & validator unit tests passing
+  - [x] Presubmit all green
+- **Open Issues:** None
+
+## Brick 3 & 4: Game Engine & Storage Resilience
+- **Status:** In Progress
+- **Started:** 2026-10-08 11:58 IST
+
 
 
