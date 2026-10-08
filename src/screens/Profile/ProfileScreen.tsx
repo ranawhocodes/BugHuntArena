@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useAppState } from '../../app/AppState';
+import { useAuth } from '../../auth/AuthContext';
 import { ALL_PUZZLES } from '../../content/puzzles';
 import { calculateLevel } from '../../engine/engine';
 import { Card } from '../../components/Card';
@@ -16,8 +17,10 @@ interface AchievementBadge {
 
 export function ProfileScreen() {
   const { state } = useAppState();
+  const { user } = useAuth();
   const { xp, bugBits, streakDays, capturedCreatureIds, completedPuzzleIds } = state;
 
+  const hunterName = state.playerName || (user?.user_metadata?.name as string | undefined)?.trim() || 'Hunter';
   const levelInfo = calculateLevel(xp);
 
   // Collect all 24 distinct bug creatures from the puzzle bank
@@ -118,7 +121,10 @@ export function ProfileScreen() {
         </div>
         <div className="bha-hunter-card__info">
           <div className="bha-hunter-card__title-row">
-            <h1 className="bha-hunter-card__title">{levelInfo.title}</h1>
+            <div className="bha-hunter-card__header-text">
+              <h1 className="bha-hunter-card__title">{hunterName}</h1>
+              <p className="bha-hunter-card__rank-subtitle">{levelInfo.title}</p>
+            </div>
             <Badge variant="primary" size="md">
               Level {levelInfo.level}
             </Badge>

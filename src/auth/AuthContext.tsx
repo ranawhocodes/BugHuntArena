@@ -6,7 +6,7 @@ interface AuthContextValue {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signUp: (email: string, password: string) => Promise<{ error: string | null; session: Session | null }>;
+  signUp: (email: string, password: string, name?: string) => Promise<{ error: string | null; session: Session | null }>;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
 }
@@ -38,8 +38,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({ email, password });
+  const signUp = async (email: string, password: string, name?: string) => {
+    const trimmedName = name?.trim();
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: trimmedName ? { data: { name: trimmedName } } : undefined,
+    });
     if (error) return { error: error.message, session: null };
     return { error: null, session: data.session };
   };

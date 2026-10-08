@@ -34,7 +34,14 @@
 .bha-hunter-card__title-row {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.bha-hunter-card__header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .bha-hunter-card__title {
@@ -42,6 +49,13 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   margin: 0;
+}
+
+.bha-hunter-card__rank-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 500;
 }
 
 .bha-hunter-card__stats-grid {

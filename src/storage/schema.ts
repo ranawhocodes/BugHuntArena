@@ -19,6 +19,7 @@ export interface PlayerStats {
 
 export interface PlayerSaveData {
   version: 1;
+  playerName?: string;
   xp: number;
   bugBits: number;
   streakDays: number;

@@ -7,6 +7,7 @@ type Mode = 'signin' | 'signup';
 export function AuthScreen() {
   const { signIn, signUp } = useAuth();
   const [mode, setMode] = useState<Mode>('signin');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -31,6 +32,10 @@ export function AuthScreen() {
     }
 
     if (mode === 'signup') {
+      if (!name.trim()) {
+        setError('Please enter your hunter name.');
+        return;
+      }
       if (password.length < 6) {
         setError('Password must be at least 6 characters.');
         return;
@@ -45,12 +50,13 @@ export function AuthScreen() {
 
     try {
       if (mode === 'signup') {
-        const { error: err, session: newSession } = await signUp(email, password);
+        const { error: err, session: newSession } = await signUp(email, password, name);
         if (err) {
           setError(err);
         } else if (!newSession) {
           setSuccess('Account created! Please check your email to confirm, then sign in.');
           setMode('signin');
+          setName('');
           setPassword('');
           setConfirmPassword('');
         }
@@ -109,6 +115,22 @@ export function AuthScreen() {
 
         {/* Form */}
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
+          {mode === 'signup' && (
+            <div className="auth-field">
+              <label htmlFor="auth-name" className="auth-field__label">Hunter Name</label>
+              <input
+                id="auth-name"
+                type="text"
+                autoComplete="name"
+                className="auth-field__input"
+                placeholder="e.g. Code Ranger"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={submitting}
+              />
+            </div>
+          )}
+
           <div className="auth-field">
             <label htmlFor="auth-email" className="auth-field__label">Email</label>
             <input

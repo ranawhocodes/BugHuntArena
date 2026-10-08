@@ -11,6 +11,7 @@ import { useAuth } from '../auth/AuthContext';
 interface AppStateContextValue {
   state: PlayerSaveData;
   syncing: boolean;
+  setPlayerName: (name: string) => void;
   recordPuzzleCompletion: (
     puzzleId: string,
     creatureId: string,
@@ -50,17 +51,29 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
     let cancelled = false;
     setSyncing(true);
 
+    const metadataName = (user.user_metadata?.name as string | undefined)?.trim();
+
     loadCloudSave(user.id).then((cloudData) => {
       if (cancelled) return;
 
       if (cloudData) {
-        // Cloud data exists — use it and update localStorage
-        setState(cloudData);
-        saveData(cloudData);
+        // Cloud data exists — ensure playerName from metadata if missing in cloudData
+        const merged: PlayerSaveData = {
+          ...cloudData,
+          ...(metadataName && !cloudData.playerName ? { playerName: metadataName } : {}),
+        };
+        setState(merged);
+        saveData(merged);
       } else {
-        // No cloud data — push local state to cloud
+        // No cloud data — push local state (with metadata name) to cloud
         const local = loadSaveData();
-        saveCloudData(user.id, local);
+        const initialWithMeta: PlayerSaveData = {
+          ...local,
+          ...(metadataName && !local.playerName ? { playerName: metadataName } : {}),
+        };
+        setState(initialWithMeta);
+        saveData(initialWithMeta);
+        saveCloudData(user.id, initialWithMeta);
       }
 
       initialLoadDone.current = true;
@@ -220,6 +233,13 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const setPlayerName = useCallback((name: string) => {
+    setState((prev) => ({
+      ...prev,
+      playerName: name.trim(),
+    }));
+  }, []);
+
   const resetProgress = useCallback(() => {
     clearSaveData();
     if (user) {
@@ -233,6 +253,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       value={{
         state,
         syncing,
+        setPlayerName,
         recordPuzzleCompletion,
         feedPet,
         strokePet,
