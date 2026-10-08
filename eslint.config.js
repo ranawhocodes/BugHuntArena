@@ -68,6 +68,6 @@ export default [
     },
   },
   {
-    ignores: ['dist/', 'coverage/', 'node_modules/', 'scripts/', 'api/'],
+    ignores: ['dist/', 'coverage/', 'node_modules/', 'scripts/', 'api/', 'creative-showcase/'],
   },
 ];

@@ -1,0 +1,242 @@
+/* ==========================================================================
+   ALEX VANCE — CREATIVE TECHNOLOGIST DESIGN SYSTEM
+   Synthesized from Subscrr, SWSH, Duda Lima, FMI Industries, and Elena Gonci.
+   ========================================================================== */
+
+:root {
+  /* Color System — Dark Mode (Default) */
+  --bg-primary: #08090d;
+  --bg-secondary: #0e1017;
+  --bg-surface: #141722;
+  --bg-surface-elevated: #1c202e;
+  --bg-glass: rgba(14, 16, 23, 0.72);
+  
+  --text-primary: #f5f7fa;
+  --text-secondary: #9aa1b2;
+  --text-muted: #5a6275;
+  --text-inverse: #08090d;
+
+  --accent: #ff402b;           /* Vermilion / International Orange */
+  --accent-cyan: #00e5ff;      /* Cyber Cyan */
+  --accent-lime: #b5ff2b;      /* Acid Lime */
+  --accent-violet: #8e55ff;    /* Deep Spectrum Violet */
+
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-bold: rgba(255, 255, 255, 0.28);
+  --border-accent: rgba(255, 64, 43, 0.4);
+
+  /* Typography System */
+  --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-editorial: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Typography Scale */
+  --text-xs: 0.75rem;       /* 12px */
+  --text-sm: 0.875rem;      /* 14px */
+  --text-base: 1rem;        /* 16px */
+  --text-lg: 1.125rem;      /* 18px */
+  --text-xl: 1.375rem;      /* 22px */
+  --text-2xl: 1.875rem;     /* 30px */
+  --text-3xl: 2.5rem;       /* 40px */
+  --text-4xl: clamp(2.75rem, 5vw, 4.5rem);  /* 44px - 72px */
+  --text-display: clamp(3.5rem, 8vw, 8rem); /* 56px - 128px */
+  --text-hero: clamp(4rem, 11vw, 11.5rem);  /* 64px - 184px */
+
+  /* Spacing System */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+  --space-40: 10rem;    /* 160px */
+
+  /* Motion Timing & Physics */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 180ms;
+  --duration-medium: 420ms;
+  --duration-slow: 750ms;
+  --duration-cinematic: 1200ms;
+
+  /* Grid & Layout */
+  --grid-max-width: 1440px;
+  --grid-margin: clamp(1.25rem, 4vw, 4rem);
+  --border-radius-xs: 4px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 14px;
+  --border-radius-lg: 24px;
+  --border-radius-full: 9999px;
+}
+
+/* Light Mode Overrides */
+[data-theme='light'],
+.theme-light {
+  --bg-primary: #f6f7fa;
+  --bg-secondary: #ebedf2;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f0f2f7;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+
+  --text-primary: #0a0c12;
+  --text-secondary: #4a5163;
+  --text-muted: #80889c;
+  --text-inverse: #f5f7fa;
+
+  --accent: #e52e19;
+  --accent-cyan: #009db3;
+  --accent-lime: #6bb300;
+
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.16);
+  --border-bold: rgba(0, 0, 0, 0.32);
+  --border-accent: rgba(229, 46, 25, 0.35);
+}
+
+/* Base Reset & Core Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+  transition: background-color var(--duration-medium) var(--ease-out-expo),
+              color var(--duration-medium) var(--ease-out-expo);
+}
+
+/* Subtle background noise / ambient grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+p {
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+/* Utility Containers */
+.container {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-margin);
+  padding-right: var(--grid-margin);
+}
+
+.container-wide {
+  width: 100%;
+  max-width: 1720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-margin);
+  padding-right: var(--grid-margin);
+}
+
+/* Grid System */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .grid-12 {
+    grid-template-columns: repeat(8, 1fr);
+    gap: var(--space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-12 {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+/* Selection Highlight */
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* Accessible Focus States */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--border-radius-xs);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--border-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
