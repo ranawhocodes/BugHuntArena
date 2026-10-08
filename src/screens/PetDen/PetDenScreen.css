@@ -31,6 +31,11 @@
   gap: var(--space-8);
   flex-wrap: wrap;
   justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-card);
 }
 
 .bha-pet-stage__showcase {
@@ -38,6 +43,8 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-4);
+  background: radial-gradient(circle, rgba(61, 220, 255, 0.08) 0%, transparent 70%);
+  border-radius: var(--radius-full);
 }
 
 .bha-pet-stage__meta {
@@ -55,7 +62,9 @@
 }
 
 .bha-pet-stage__name {
-  font-size: var(--text-2xl);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
@@ -63,21 +72,27 @@
 .bha-meter {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-2);
 }
 
 .bha-meter__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: var(--text-xs);
+  font-family: var(--font-code);
+  font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--text-muted);
 }
 
+.bha-meter__val {
+  color: var(--text);
+}
+
 .bha-meter__bar {
-  height: 10px;
+  height: 8px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
@@ -86,7 +101,7 @@
 
 .bha-meter__fill {
   height: 100%;
-  background: linear-gradient(90deg, #ff4d8d, #ff6b6b);
+  background: linear-gradient(90deg, #3ddcff, #00e599);
   border-radius: var(--radius-full);
   transition: width var(--duration-normal) var(--ease-out);
 }
@@ -106,7 +121,9 @@
 }
 
 .bha-wardrobe__title {
-  font-size: var(--text-xl);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .bha-wardrobe__grid {
@@ -122,14 +139,25 @@
   justify-content: center;
   gap: var(--space-2);
   padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
   cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.bha-cosmetic-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
 }
 
 .bha-cosmetic-card__icon {
-  font-size: 2rem;
+  font-size: 1.75rem;
 }
 
 .bha-cosmetic-card__name {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   font-weight: 600;
+  color: var(--text);
 }

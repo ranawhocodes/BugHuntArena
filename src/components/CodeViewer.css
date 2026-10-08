@@ -1,23 +1,23 @@
 .bha-code-viewer {
-  background: #0d1224;
+  background: #060a16;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), var(--shadow-card);
   font-family: var(--font-code);
 }
 
 [data-theme='light'] .bha-code-viewer {
-  background: #f8faff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .bha-code-viewer__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-2) var(--space-4);
-  background: rgba(255, 255, 255, 0.03);
+  padding: 8px var(--space-4);
+  background: rgba(255, 255, 255, 0.02);
   border-bottom: 1px solid var(--border);
   font-size: var(--text-xs);
 }
@@ -25,16 +25,18 @@
 .bha-code-viewer__lang {
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--primary);
+  font-size: 0.6875rem;
 }
 
 .bha-code-viewer__hint {
   color: var(--text-muted);
+  font-size: 0.75rem;
 }
 
 .bha-code-viewer__body {
-  padding: var(--space-2) 0;
+  padding: var(--space-3) 0;
   overflow-x: auto;
 }
 
@@ -51,7 +53,7 @@
 }
 
 .bha-code-line:hover:not(.bha-code-viewer--disabled *) {
-  background: rgba(61, 220, 255, 0.08);
+  background: rgba(61, 220, 255, 0.06);
 }
 
 .bha-code-line:focus-visible {
@@ -61,12 +63,13 @@
 
 /* Line Number */
 .bha-code-line__num {
-  width: 32px;
-  min-width: 32px;
+  width: 36px;
+  min-width: 36px;
   text-align: right;
   padding-right: var(--space-3);
-  color: var(--text-muted);
-  opacity: 0.6;
+  margin-right: var(--space-3);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-dim);
   font-size: 0.8125rem;
   user-select: none;
 }
@@ -79,17 +82,17 @@
 
 /* Selection & Highlight States */
 .bha-code-line--selected {
-  background: rgba(61, 220, 255, 0.15) !important;
+  background: rgba(61, 220, 255, 0.12) !important;
   border-left: 3px solid var(--primary);
 }
 
 .bha-code-line--highlighted {
-  background: rgba(61, 220, 151, 0.2) !important;
+  background: rgba(0, 229, 153, 0.16) !important;
   border-left: 3px solid var(--success);
 }
 
 .bha-code-line--wrong {
-  background: rgba(255, 107, 107, 0.25) !important;
+  background: rgba(255, 69, 58, 0.22) !important;
   border-left: 3px solid var(--danger);
   animation: shakeLine 0.4s ease-in-out;
 }

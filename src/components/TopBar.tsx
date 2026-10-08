@@ -1,4 +1,5 @@
 import { ThemeToggle } from './ThemeToggle';
+import { useAuth } from '../auth/AuthContext';
 import type { Route } from '../app/router';
 import './TopBar.css';
 
@@ -18,6 +19,8 @@ export function TopBar({
   level = 1,
   bugBits = 50,
 }: TopBarProps) {
+  const { signOut, user } = useAuth();
+
   return (
     <header className="bha-topbar" role="banner">
       <div className="bha-topbar__inner">
@@ -124,6 +127,18 @@ export function TopBar({
           </nav>
 
           <ThemeToggle />
+
+          {user && (
+            <button
+              type="button"
+              className="bha-topbar__signout"
+              onClick={() => signOut()}
+              aria-label="Sign out"
+              title={`Sign out (${user.email ?? ''})`}
+            >
+              <span aria-hidden="true">🚪</span>
+            </button>
+          )}
         </div>
       </div>
     </header>

@@ -66,6 +66,16 @@ bug-hunt-arena/
 
 ---
 
+## 🔐 Supabase Authentication & Cloud Progress Sync
+
+Bug Hunt Arena includes full user authentication and persistent cloud progress backed by Supabase:
+- **Authentication Gate:** Users and jury members can sign up with their email and password or sign in to resume their progress from any device.
+- **Continuous Cloud Sync:** Puzzles solved, levels, XP, streaks, unlocked badges, and pet states automatically sync to the database with debounced upsert operations.
+- **Row Level Security (RLS):** Every player's save state is isolated and protected with PostgreSQL RLS policies in `supabase/schema.sql`.
+- **Offline / Local Fallback:** When running locally without Supabase keys, the app seamlessly falls back to local storage without crashing.
+
+---
+
 ## 🤖 AI Bug Generation & Offline Fallback
 
 Bug Hunt Arena features a hybrid architecture:

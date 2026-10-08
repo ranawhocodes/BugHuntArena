@@ -1,13 +1,16 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { loadSaveData, saveData, clearSaveData } from '../storage/storage';
+import { loadCloudSave, saveCloudData, clearCloudSave } from '../storage/cloudSync';
 import { createInitialPlayerState } from '../storage/schema';
 import type { PlayerSaveData, PetState } from '../storage/schema';
 import type { BugCategory } from '../content/types';
 import { PET_FEED_COST, PET_FEED_COOLDOWN_MS, PET_MAX_STROKES_PER_DAY } from '../engine/constants';
 import { updateStreak } from '../engine/engine';
+import { useAuth } from '../auth/AuthContext';
 
 interface AppStateContextValue {
   state: PlayerSaveData;
+  syncing: boolean;
   recordPuzzleCompletion: (
     puzzleId: string,
     creatureId: string,
@@ -24,13 +27,72 @@ interface AppStateContextValue {
 
 const AppStateContext = createContext<AppStateContextValue | null>(null);
 
-export function AppStateProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<PlayerSaveData>(() => loadSaveData());
+/** Debounce interval for cloud saves (ms) */
+const CLOUD_SAVE_DEBOUNCE = 2000;
 
-  // Automatically save state on change
+export function AppStateProvider({ children }: { children: React.ReactNode }) {
+  const { user } = useAuth();
+  const [state, setState] = useState<PlayerSaveData>(() => loadSaveData());
+  const [syncing, setSyncing] = useState(false);
+  const cloudSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const initialLoadDone = useRef(false);
+
+  // Load cloud save when user logs in
   useEffect(() => {
+    if (!user) {
+      initialLoadDone.current = false;
+      return;
+    }
+
+    // Only load once per login
+    if (initialLoadDone.current) return;
+
+    let cancelled = false;
+    setSyncing(true);
+
+    loadCloudSave(user.id).then((cloudData) => {
+      if (cancelled) return;
+
+      if (cloudData) {
+        // Cloud data exists — use it and update localStorage
+        setState(cloudData);
+        saveData(cloudData);
+      } else {
+        // No cloud data — push local state to cloud
+        const local = loadSaveData();
+        saveCloudData(user.id, local);
+      }
+
+      initialLoadDone.current = true;
+      setSyncing(false);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
+  // Save state changes to both localStorage and cloud (debounced)
+  useEffect(() => {
+    // Always save to localStorage immediately
     saveData(state);
-  }, [state]);
+
+    // If user is logged in, also save to cloud (debounced)
+    if (user && initialLoadDone.current) {
+      if (cloudSaveTimer.current) {
+        clearTimeout(cloudSaveTimer.current);
+      }
+      cloudSaveTimer.current = setTimeout(() => {
+        saveCloudData(user.id, state);
+      }, CLOUD_SAVE_DEBOUNCE);
+    }
+
+    return () => {
+      if (cloudSaveTimer.current) {
+        clearTimeout(cloudSaveTimer.current);
+      }
+    };
+  }, [state, user]);
 
   const recordPuzzleCompletion = useCallback(
     (
@@ -160,13 +222,17 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
 
   const resetProgress = useCallback(() => {
     clearSaveData();
+    if (user) {
+      clearCloudSave(user.id);
+    }
     setState(createInitialPlayerState());
-  }, []);
+  }, [user]);
 
   return (
     <AppStateContext.Provider
       value={{
         state,
+        syncing,
         recordPuzzleCompletion,
         feedPet,
         strokePet,

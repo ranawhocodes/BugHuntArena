@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { useRouter } from './router';
 import type { Route } from './router';
+import { AuthProvider, useAuth } from '../auth/AuthContext';
 import { AppStateProvider, useAppState } from './AppState';
 import { calculateLevel } from '../engine/engine';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { TopBar } from '../components/TopBar';
+import { AuthScreen } from '../screens/Auth/AuthScreen';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { AboutScreen } from '../screens/About/AboutScreen';
 import { ArenaScreen } from '../screens/Arena/ArenaScreen';
@@ -21,6 +23,29 @@ const SCREEN_TITLES: Record<Route, string> = {
   '/pet': 'Pet Den — Bug Hunt Arena',
   '/about': 'About — Bug Hunt Arena',
 };
+
+/** Loading spinner shown during auth check */
+function AuthLoading() {
+  return (
+    <div
+      className="app-shell"
+      data-theme="dark"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+      }}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '1rem' }}>🐛</span>
+        <p style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
+          Loading…
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function AppContent() {
   const { route, navigate } = useRouter();
@@ -91,12 +116,26 @@ function AppContent() {
   );
 }
 
+/** Auth gate: shows AuthScreen if not logged in */
+function AuthGate() {
+  const { user, loading } = useAuth();
+
+  if (loading) return <AuthLoading />;
+  if (!user) return <AuthScreen />;
+
+  return (
+    <AppStateProvider>
+      <AppContent />
+    </AppStateProvider>
+  );
+}
+
 export function App() {
   return (
     <ErrorBoundary>
-      <AppStateProvider>
-        <AppContent />
-      </AppStateProvider>
+      <AuthProvider>
+        <AuthGate />
+      </AuthProvider>
     </ErrorBoundary>
   );
 }
