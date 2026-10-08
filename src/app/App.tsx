@@ -3,6 +3,7 @@ import { useRouter } from './router';
 import type { Route } from './router';
 import { AppStateProvider, useAppState } from './AppState';
 import { calculateLevel } from '../engine/engine';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import { TopBar } from '../components/TopBar';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { AboutScreen } from '../screens/About/AboutScreen';
@@ -92,8 +93,10 @@ function AppContent() {
 
 export function App() {
   return (
-    <AppStateProvider>
-      <AppContent />
-    </AppStateProvider>
+    <ErrorBoundary>
+      <AppStateProvider>
+        <AppContent />
+      </AppStateProvider>
+    </ErrorBoundary>
   );
 }
