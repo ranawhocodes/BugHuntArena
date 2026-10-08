@@ -121,8 +121,25 @@
 - **Open Issues:** None
 
 ## Brick 9 & 10: Daily Hunt, Bug Dex & Badges
-- **Status:** In Progress
+- **Status:** Complete ✅
 - **Started:** 2026-10-08 12:15 IST
+- **Completed:** 2026-10-08 12:19 IST
+- **Decisions:**
+  - Daily Hunt (`src/screens/Daily/DailyScreen.tsx`): Deterministic 3-puzzle daily sprint based on date string seed (Mulberry32 PRNG), shield preservation, and Wordle-style share scorecard generator
+  - Hunter Profile (`src/screens/Profile/ProfileScreen.tsx`): Level progression bar, 10 achievement badges with unlocked/locked states, and full 24-creature Bug Dex with captured details vs mystery locked silhouettes
+  - Every screen in the entire application is now fully built and routed with zero placeholders remaining
+- **Done:**
+  - [x] DailyScreen with deterministic trio & share generator (`src/screens/Daily/DailyScreen.tsx`)
+  - [x] ProfileScreen with hunter card, badges, and Bug Dex (`src/screens/Profile/ProfileScreen.tsx`)
+  - [x] Removed all placeholder screens
+  - [x] 3 new unit tests passing (57 tests total)
+  - [x] Presubmit gate 100% green
+- **Open Issues:** None
+
+## Brick 11: AI Bug Generation & Fallback
+- **Status:** In Progress
+- **Started:** 2026-10-08 12:20 IST
+
 
 
 

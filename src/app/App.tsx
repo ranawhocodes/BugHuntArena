@@ -8,6 +8,8 @@ import { HomeScreen } from '../screens/Home/HomeScreen';
 import { AboutScreen } from '../screens/About/AboutScreen';
 import { ArenaScreen } from '../screens/Arena/ArenaScreen';
 import { PetDenScreen } from '../screens/PetDen/PetDenScreen';
+import { DailyScreen } from '../screens/Daily/DailyScreen';
+import { ProfileScreen } from '../screens/Profile/ProfileScreen';
 
 /** Screen titles for document.title updates per spec Section 6.6 */
 const SCREEN_TITLES: Record<Route, string> = {
@@ -18,31 +20,6 @@ const SCREEN_TITLES: Record<Route, string> = {
   '/pet': 'Pet Den — Bug Hunt Arena',
   '/about': 'About — Bug Hunt Arena',
 };
-
-/** Placeholder screen component for screens still under construction */
-function PlaceholderScreen({
-  title,
-  subtitle,
-  icon,
-}: {
-  title: string;
-  subtitle: string;
-  icon: string;
-}) {
-  return (
-    <div className="screen" style={{ textAlign: 'center', padding: 'var(--space-12) var(--space-4)' }}>
-      <div style={{ fontSize: '3.5rem', marginBottom: 'var(--space-3)' }} aria-hidden="true">
-        {icon}
-      </div>
-      <h1 tabIndex={-1} style={{ fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-2)' }}>
-        {title}
-      </h1>
-      <p style={{ color: 'var(--text-muted)', fontSize: 'var(--text-lg)' }}>
-        {subtitle}
-      </p>
-    </div>
-  );
-}
 
 function AppContent() {
   const { route, navigate } = useRouter();
@@ -75,20 +52,8 @@ function AppContent() {
       <main id="main-content" role="main">
         {route === '/' && <HomeScreen onNavigate={navigate} />}
         {route === '/play' && <ArenaScreen />}
-        {route === '/daily' && (
-          <PlaceholderScreen
-            title="Daily Hunt"
-            subtitle="Today's 3-puzzle challenge arriving in Brick 9..."
-            icon="📅"
-          />
-        )}
-        {route === '/profile' && (
-          <PlaceholderScreen
-            title="Hunter Profile"
-            subtitle="Bug Dex, statistics & achievement badges arriving in Brick 10..."
-            icon="👤"
-          />
-        )}
+        {route === '/daily' && <DailyScreen />}
+        {route === '/profile' && <ProfileScreen />}
         {route === '/pet' && <PetDenScreen />}
         {route === '/about' && <AboutScreen />}
       </main>
