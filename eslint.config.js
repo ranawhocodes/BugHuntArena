@@ -7,7 +7,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 export default [
   js.configs.recommended,
   {
-    files: ['src/**/*.{ts,tsx}'],
+    files: ['src/**/*.{ts,tsx}', 'tests/**/*.{ts,tsx}', 'vite.config.ts'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -33,6 +33,10 @@ export default [
         HTMLElement: 'readonly',
         HTMLButtonElement: 'readonly',
         HTMLInputElement: 'readonly',
+        HTMLSpanElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        Element: 'readonly',
+        Node: 'readonly',
         KeyboardEvent: 'readonly',
         MouseEvent: 'readonly',
         Event: 'readonly',

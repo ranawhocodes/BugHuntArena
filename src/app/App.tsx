@@ -1,5 +1,9 @@
+import { useEffect } from 'react';
 import { useRouter } from './router';
 import type { Route } from './router';
+import { TopBar } from '../components/TopBar';
+import { HomeScreen } from '../screens/Home/HomeScreen';
+import { AboutScreen } from '../screens/About/AboutScreen';
 
 /** Screen titles for document.title updates per spec Section 6.6 */
 const SCREEN_TITLES: Record<Route, string> = {
@@ -11,12 +15,27 @@ const SCREEN_TITLES: Record<Route, string> = {
   '/about': 'About — Bug Hunt Arena',
 };
 
-/** Placeholder screen component */
-function PlaceholderScreen({ title }: { title: string }) {
+/** Placeholder screen component for screens still under construction */
+function PlaceholderScreen({
+  title,
+  subtitle,
+  icon,
+}: {
+  title: string;
+  subtitle: string;
+  icon: string;
+}) {
   return (
-    <div className="screen">
-      <h1 tabIndex={-1}>{title}</h1>
-      <p>Coming soon...</p>
+    <div className="screen" style={{ textAlign: 'center', padding: 'var(--space-12) var(--space-4)' }}>
+      <div style={{ fontSize: '3.5rem', marginBottom: 'var(--space-3)' }} aria-hidden="true">
+        {icon}
+      </div>
+      <h1 tabIndex={-1} style={{ fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-2)' }}>
+        {title}
+      </h1>
+      <p style={{ color: 'var(--text-muted)', fontSize: 'var(--text-lg)' }}>
+        {subtitle}
+      </p>
     </div>
   );
 }
@@ -25,7 +44,11 @@ export function App() {
   const { route, navigate } = useRouter();
 
   // Update document title on route change
-  document.title = SCREEN_TITLES[route];
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.title = SCREEN_TITLES[route] || SCREEN_TITLES['/'];
+    }
+  }, [route]);
 
   return (
     <div className="app-shell" data-theme="dark">
@@ -34,57 +57,74 @@ export function App() {
         Skip to main content
       </a>
 
-      <header className="top-bar" role="banner">
-        <button
-          className="logo-btn"
-          onClick={() => navigate('/')}
-          aria-label="Bug Hunt Arena — Home"
-        >
-          <span className="logo-icon" aria-hidden="true">🐛</span>
-          <span className="logo-text">Bug Hunt Arena</span>
-        </button>
-
-        <nav className="top-nav" aria-label="Main navigation">
-          <button
-            onClick={() => navigate('/daily')}
-            aria-current={route === '/daily' ? 'page' : undefined}
-            className="nav-btn"
-          >
-            🔥 Daily
-          </button>
-          <button
-            onClick={() => navigate('/profile')}
-            aria-current={route === '/profile' ? 'page' : undefined}
-            className="nav-btn"
-          >
-            👤 Profile
-          </button>
-          <button
-            onClick={() => navigate('/pet')}
-            aria-current={route === '/pet' ? 'page' : undefined}
-            className="nav-btn"
-          >
-            🐾 Pet
-          </button>
-        </nav>
-      </header>
+      <TopBar
+        currentRoute={route}
+        onNavigate={navigate}
+        streakDays={3}
+        level={1}
+        bugBits={50}
+      />
 
       <main id="main-content" role="main">
-        {route === '/' && <PlaceholderScreen title="Home" />}
-        {route === '/play' && <PlaceholderScreen title="Arena" />}
-        {route === '/daily' && <PlaceholderScreen title="Daily Hunt" />}
-        {route === '/profile' && <PlaceholderScreen title="Profile" />}
-        {route === '/pet' && <PlaceholderScreen title="Pet Den" />}
-        {route === '/about' && <PlaceholderScreen title="About" />}
+        {route === '/' && <HomeScreen onNavigate={navigate} />}
+        {route === '/play' && (
+          <PlaceholderScreen
+            title="Arena (Free Play)"
+            subtitle="Assembling puzzles and game engine in Brick 2..."
+            icon="⚔️"
+          />
+        )}
+        {route === '/daily' && (
+          <PlaceholderScreen
+            title="Daily Hunt"
+            subtitle="Today's 3-puzzle challenge arriving in Brick 9..."
+            icon="📅"
+          />
+        )}
+        {route === '/profile' && (
+          <PlaceholderScreen
+            title="Hunter Profile"
+            subtitle="Bug Dex, statistics & achievement badges arriving in Brick 10..."
+            icon="👤"
+          />
+        )}
+        {route === '/pet' && (
+          <PlaceholderScreen
+            title="Pet Den"
+            subtitle="Your interactive SVG pet companion arriving in Brick 8..."
+            icon="🐾"
+          />
+        )}
+        {route === '/about' && <AboutScreen />}
       </main>
 
       <footer role="contentinfo">
-        <button
-          onClick={() => navigate('/about')}
-          className="footer-link"
-        >
-          About
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-4)' }}>
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="footer-link"
+          >
+            Home
+          </button>
+          <span>•</span>
+          <button
+            type="button"
+            onClick={() => navigate('/about')}
+            className="footer-link"
+          >
+            About & Shortcuts
+          </button>
+          <span>•</span>
+          <a
+            href="https://github.com/ranawhocodes/BugHuntArena"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            GitHub Repo
+          </a>
+        </div>
       </footer>
     </div>
   );

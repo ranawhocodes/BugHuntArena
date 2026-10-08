@@ -1,0 +1,54 @@
+.bha-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  position: relative;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.bha-card--glass {
+  background: rgba(18, 26, 51, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+[data-theme='light'] .bha-card--glass {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(201, 211, 245, 0.6);
+  box-shadow: 0 8px 32px 0 rgba(10, 107, 214, 0.08);
+}
+
+.bha-card--highlight {
+  border-color: var(--primary);
+  box-shadow: var(--glow-primary);
+}
+
+.bha-card--interactive {
+  cursor: pointer;
+}
+
+.bha-card--interactive:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 12px 30px rgba(0, 210, 255, 0.15);
+}
+
+/* Padding scale */
+.bha-card--pad-none {
+  padding: 0;
+}
+
+.bha-card--pad-sm {
+  padding: var(--space-3);
+}
+
+.bha-card--pad-md {
+  padding: var(--space-5);
+}
+
+.bha-card--pad-lg {
+  padding: var(--space-8);
+}

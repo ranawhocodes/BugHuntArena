@@ -1,0 +1,31 @@
+.bha-theme-toggle {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-full);
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.bha-theme-toggle:hover {
+  border-color: var(--primary);
+  transform: rotate(15deg);
+  background: var(--border);
+}
+
+.bha-theme-toggle:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.bha-theme-toggle__icon {
+  font-size: 1.125rem;
+  line-height: 1;
+}

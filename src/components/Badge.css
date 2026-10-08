@@ -1,0 +1,69 @@
+.bha-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.bha-badge--sm {
+  padding: 3px 8px;
+  font-size: 0.6875rem; /* 11px */
+}
+
+.bha-badge--md {
+  padding: 4px 12px;
+  font-size: var(--text-xs);
+}
+
+.bha-badge--neutral {
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.bha-badge--primary {
+  background: rgba(61, 220, 255, 0.12);
+  color: var(--primary);
+  border: 1px solid rgba(61, 220, 255, 0.3);
+}
+
+.bha-badge--accent {
+  background: rgba(255, 77, 141, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(255, 77, 141, 0.3);
+}
+
+.bha-badge--success {
+  background: rgba(61, 220, 151, 0.12);
+  color: var(--success);
+  border: 1px solid rgba(61, 220, 151, 0.3);
+}
+
+.bha-badge--warning {
+  background: rgba(255, 200, 87, 0.12);
+  color: var(--warning);
+  border: 1px solid rgba(255, 200, 87, 0.3);
+}
+
+.bha-badge--danger {
+  background: rgba(255, 107, 107, 0.12);
+  color: var(--danger);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.bha-badge--python {
+  background: rgba(53, 114, 165, 0.15);
+  color: #4b8bbe;
+  border: 1px solid rgba(75, 139, 190, 0.4);
+}
+
+.bha-badge--js {
+  background: rgba(247, 223, 30, 0.15);
+  color: #f7df1e;
+  border: 1px solid rgba(247, 223, 30, 0.4);
+}
