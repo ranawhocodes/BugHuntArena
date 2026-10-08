@@ -1,0 +1,111 @@
+.bha-fix-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.bha-fix-options__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bha-fix-options__title {
+  font-size: var(--text-base);
+  color: var(--text);
+  margin: 0;
+}
+
+.bha-fix-options__shortcut-hint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.bha-fix-options__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bha-fix-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  outline: none;
+}
+
+.bha-fix-option:hover {
+  border-color: var(--primary);
+  background: rgba(61, 220, 255, 0.05);
+}
+
+.bha-fix-option:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.bha-fix-option--selected {
+  border-color: var(--primary);
+  background: rgba(61, 220, 255, 0.12);
+  box-shadow: 0 0 16px rgba(61, 220, 255, 0.2);
+}
+
+.bha-fix-option__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bha-fix-option__key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.bha-fix-option--selected .bha-fix-option__key {
+  background: var(--primary);
+  color: #040814;
+  border-color: var(--primary);
+}
+
+.bha-fix-option__content {
+  flex: 1;
+  overflow-x: auto;
+}
+
+.bha-fix-option__code {
+  font-family: var(--font-code);
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.radio-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: inline-block;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.radio-circle--checked {
+  border-color: var(--primary);
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+}

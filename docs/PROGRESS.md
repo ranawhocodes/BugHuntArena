@@ -78,8 +78,33 @@
 - **Open Issues:** None
 
 ## Brick 5 & 6: Arena Find Bug & Fix Step [END-TO-END PLAYABLE]
-- **Status:** In Progress
+- **Status:** Complete ✅
 - **Started:** 2026-10-08 12:02 IST
+- **Completed:** 2026-10-08 12:08 IST
+- **Decisions:**
+  - Zero-dependency syntax tokenizer (`src/highlight/tokenizer.ts`) styling Python and JS tokens
+  - Interactive, accessible `CodeViewer` with line numbers, keyboard arrow focus, and line selection
+  - Side-by-side terminal `OutputPanel` comparing actual broken error output against expected behavior
+  - Accessible `FixOptions` with `1`, `2`, `3`, `4` keyboard shortcuts and radio role
+  - Shield system (3 shields) with shake animation and real-time screen reader announcements
+  - `CreatureReveal` modal celebrating victory with creature card, lore, rewards ribbon, and red/green code diff
+  - Integration tests verifying full end-to-end hunting loop from line selection to fix deploy and capture
+- **Done:**
+  - [x] Syntax tokenizer (`src/highlight/tokenizer.ts`)
+  - [x] CodeViewer component (`src/components/CodeViewer.tsx`)
+  - [x] OutputPanel terminal (`src/components/OutputPanel.tsx`)
+  - [x] FixOptions radio component (`src/components/FixOptions.tsx`)
+  - [x] CreatureReveal modal & diff viewer (`src/components/CreatureReveal.tsx`)
+  - [x] ArenaScreen with language tabs, shields, hints, and phase transitions (`src/screens/Arena/ArenaScreen.tsx`)
+  - [x] Wired ArenaScreen into `/play` hash route
+  - [x] 4 new integration tests passing (48 tests total)
+  - [x] Presubmit gate 100% green
+- **Open Issues:** None
+
+## Brick 7 & 8: Hints & Living SVG Pet Companion
+- **Status:** In Progress
+- **Started:** 2026-10-08 12:09 IST
+
 
 
 

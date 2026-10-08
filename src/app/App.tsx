@@ -6,6 +6,7 @@ import { calculateLevel } from '../engine/engine';
 import { TopBar } from '../components/TopBar';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { AboutScreen } from '../screens/About/AboutScreen';
+import { ArenaScreen } from '../screens/Arena/ArenaScreen';
 
 /** Screen titles for document.title updates per spec Section 6.6 */
 const SCREEN_TITLES: Record<Route, string> = {
@@ -72,13 +73,7 @@ function AppContent() {
 
       <main id="main-content" role="main">
         {route === '/' && <HomeScreen onNavigate={navigate} />}
-        {route === '/play' && (
-          <PlaceholderScreen
-            title="Arena (Free Play)"
-            subtitle="Entering Core Gameplay in Brick 5..."
-            icon="⚔️"
-          />
-        )}
+        {route === '/play' && <ArenaScreen />}
         {route === '/daily' && (
           <PlaceholderScreen
             title="Daily Hunt"
