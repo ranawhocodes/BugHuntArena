@@ -13,6 +13,7 @@ import { Card } from '../../components/Card';
 import { calculateXP, calculateBugBits } from '../../engine/engine';
 import type { XpResult } from '../../engine/engine';
 import { useAppState } from '../../app/AppState';
+import { requestBugPuzzle } from '../../ai/generator';
 import './ArenaScreen.css';
 
 type HuntPhase = 'FIND_LINE' | 'FIX_BUG' | 'REVEAL';
@@ -22,6 +23,9 @@ export function ArenaScreen() {
 
   const [language, setLanguage] = useState<Language>('python');
   const [puzzleIndex, setPuzzleIndex] = useState(0);
+  const [customAiPuzzle, setCustomAiPuzzle] = useState<BugPuzzle | null>(null);
+  const [isGeneratingAi, setIsGeneratingAi] = useState(false);
+  const [bugReported, setBugReported] = useState(false);
 
   // Gameplay state
   const [phase, setPhase] = useState<HuntPhase>('FIND_LINE');
@@ -42,7 +46,7 @@ export function ArenaScreen() {
   const [lastBitsEarned, setLastBitsEarned] = useState<number>(0);
 
   const puzzles = useMemo(() => getPuzzlesByLanguage(language), [language]);
-  const currentPuzzle: BugPuzzle = puzzles[puzzleIndex] || puzzles[0];
+  const currentPuzzle: BugPuzzle = customAiPuzzle || puzzles[puzzleIndex] || puzzles[0];
 
   const resetForPuzzle = useCallback(() => {
     setPhase('FIND_LINE');
@@ -61,14 +65,35 @@ export function ArenaScreen() {
     if (newLang !== language) {
       setLanguage(newLang);
       setPuzzleIndex(0);
+      setCustomAiPuzzle(null);
       resetForPuzzle();
     }
   };
 
   const handleNextPuzzle = () => {
+    setCustomAiPuzzle(null);
     const nextIdx = (puzzleIndex + 1) % puzzles.length;
     setPuzzleIndex(nextIdx);
     resetForPuzzle();
+  };
+
+  const handleGenerateAi = async () => {
+    setIsGeneratingAi(true);
+    setBugReported(false);
+    try {
+      const res = await requestBugPuzzle(language, 1);
+      setCustomAiPuzzle(res.puzzle);
+      resetForPuzzle();
+      setAnnouncement(res.message || 'Spawned fresh AI bug puzzle!');
+    } finally {
+      setIsGeneratingAi(false);
+    }
+  };
+
+  const handleReportBug = () => {
+    setBugReported(true);
+    setAnnouncement('Bug reported. Thank you for making Bug Hunt Arena better!');
+    setTimeout(() => handleNextPuzzle(), 1200);
   };
 
   const handleConfirmLine = () => {
@@ -173,8 +198,18 @@ export function ArenaScreen() {
 
         {/* Puzzle Selector Navigator */}
         <div className="bha-puzzle-nav">
+          <Button
+            variant="accent"
+            size="sm"
+            onClick={handleGenerateAi}
+            isLoading={isGeneratingAi}
+            icon={<span aria-hidden="true">✨</span>}
+            title="Generate a dynamic AI bug using Google Gemini"
+          >
+            AI Spawn
+          </Button>
           <span className="bha-puzzle-nav__counter">
-            Puzzle {puzzleIndex + 1} of {puzzles.length}
+            {customAiPuzzle ? 'AI Challenge' : `Puzzle ${puzzleIndex + 1} of ${puzzles.length}`}
           </span>
           <Button
             variant="ghost"
@@ -191,6 +226,11 @@ export function ArenaScreen() {
       <header className="bha-arena__header">
         <div className="bha-arena__title-group">
           <div className="bha-arena__badges">
+            {customAiPuzzle && (
+              <Badge variant="accent" size="sm">
+                ✨ AI Generated
+              </Badge>
+            )}
             <Badge variant={language === 'python' ? 'python' : 'js'} size="sm">
               {language}
             </Badge>
@@ -213,6 +253,16 @@ export function ArenaScreen() {
             <Badge variant="primary" size="sm">
               {currentPuzzle.category.replace('_', ' ')}
             </Badge>
+            {customAiPuzzle && (
+              <button
+                type="button"
+                onClick={handleReportBug}
+                className="bha-report-link"
+                title="Report broken AI puzzle"
+              >
+                {bugReported ? 'Reported ✓' : '🚩 Report Bug'}
+              </button>
+            )}
           </div>
           <h1 className="bha-arena__title">{currentPuzzle.title}</h1>
         </div>

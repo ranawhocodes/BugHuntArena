@@ -137,8 +137,26 @@
 - **Open Issues:** None
 
 ## Brick 11: AI Bug Generation & Fallback
-- **Status:** In Progress
+- **Status:** Complete ✅
 - **Started:** 2026-10-08 12:20 IST
+- **Completed:** 2026-10-08 12:25 IST
+- **Decisions:**
+  - Vercel Serverless Function (`api/generate-bug.ts`) with Gemini 1.5 Flash structured output and 11s abort timeout
+  - Client-side generator (`src/ai/generator.ts`) validating AI puzzles against strict schema
+  - Graceful fallback to verified 24-puzzle bank when offline or API key omitted
+  - "AI Spawn" button in Arena, AI badge, and "Report Broken Bug" reporting mechanism per spec Section 5.3
+- **Done:**
+  - [x] Serverless route `api/generate-bug.ts`
+  - [x] Client generator `src/ai/generator.ts`
+  - [x] Integrated AI spawn button & badges into ArenaScreen
+  - [x] 3 new AI unit tests passing (60 tests total)
+  - [x] Presubmit gate 100% green
+- **Open Issues:** None
+
+## Brick 12: UI Polish & Feature Freeze
+- **Status:** In Progress
+- **Started:** 2026-10-08 12:25 IST
+
 
 
 
