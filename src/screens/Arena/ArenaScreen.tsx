@@ -5,6 +5,8 @@ import { CodeViewer } from '../../components/CodeViewer';
 import { OutputPanel } from '../../components/OutputPanel';
 import { FixOptions } from '../../components/FixOptions';
 import { CreatureReveal } from '../../components/CreatureReveal';
+import { PetCompanion } from '../../components/PetCompanion';
+import type { PetMood } from '../../components/PetCompanion';
 import { Button } from '../../components/Button';
 import { Badge } from '../../components/Badge';
 import { Card } from '../../components/Card';
@@ -32,6 +34,7 @@ export function ArenaScreen() {
   const [hintsUsed, setHintsUsed] = useState<number>(0);
   const [activeHintIndex, setActiveHintIndex] = useState<number | null>(null);
   const [announcement, setAnnouncement] = useState<string>('');
+  const [petMood, setPetMood] = useState<PetMood>('idle');
 
   // Reveal modal state
   const [isRevealOpen, setIsRevealOpen] = useState(false);
@@ -74,13 +77,18 @@ export function ArenaScreen() {
     if (selectedLine === currentPuzzle.bugLineNumber) {
       setConfirmedBugLine(selectedLine);
       setPhase('FIX_BUG');
+      setPetMood('happy');
       setAnnouncement(`Correct! Bug located on line ${selectedLine}. Now choose the fix.`);
     } else {
       setWrongLine(selectedLine);
       const newShields = Math.max(0, shields - 1);
       setShields(newShields);
+      setPetMood('alert');
       setAnnouncement(`Incorrect. Line ${selectedLine} is innocent. Shield lost.`);
-      setTimeout(() => setWrongLine(null), 800);
+      setTimeout(() => {
+        setWrongLine(null);
+        setPetMood('idle');
+      }, 800);
     }
   };
 
@@ -112,12 +120,15 @@ export function ArenaScreen() {
       );
 
       setPhase('REVEAL');
+      setPetMood('happy');
       setIsRevealOpen(true);
       setAnnouncement(`Victory! ${currentPuzzle.creature.name} was successfully captured!`);
     } else {
       const newShields = Math.max(0, shields - 1);
       setShields(newShields);
+      setPetMood('alert');
       setAnnouncement('That fix did not resolve the bug. Try another option.');
+      setTimeout(() => setPetMood('idle'), 1000);
     }
   };
 
@@ -126,6 +137,7 @@ export function ArenaScreen() {
     const nextHint = hintsUsed;
     setHintsUsed((prev) => prev + 1);
     setActiveHintIndex(nextHint);
+    setPetMood('thinking');
     setAnnouncement(`Hint tier ${nextHint + 1}: ${currentPuzzle.hints[nextHint]}`);
   };
 
@@ -229,6 +241,15 @@ export function ArenaScreen() {
           >
             Hint ({hintsUsed}/3)
           </Button>
+
+          <PetCompanion
+            species={state.pet.species}
+            stage={state.pet.stage}
+            mood={petMood}
+            cosmetic={state.pet.cosmetic}
+            size={46}
+            onClick={handleUseHint}
+          />
         </div>
       </header>
 

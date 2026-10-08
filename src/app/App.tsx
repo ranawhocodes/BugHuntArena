@@ -7,6 +7,7 @@ import { TopBar } from '../components/TopBar';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { AboutScreen } from '../screens/About/AboutScreen';
 import { ArenaScreen } from '../screens/Arena/ArenaScreen';
+import { PetDenScreen } from '../screens/PetDen/PetDenScreen';
 
 /** Screen titles for document.title updates per spec Section 6.6 */
 const SCREEN_TITLES: Record<Route, string> = {
@@ -88,13 +89,7 @@ function AppContent() {
             icon="👤"
           />
         )}
-        {route === '/pet' && (
-          <PlaceholderScreen
-            title="Pet Den"
-            subtitle="Your interactive SVG pet companion arriving in Brick 8..."
-            icon="🐾"
-          />
-        )}
+        {route === '/pet' && <PetDenScreen />}
         {route === '/about' && <AboutScreen />}
       </main>
 

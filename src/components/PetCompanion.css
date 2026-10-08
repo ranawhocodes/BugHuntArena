@@ -1,0 +1,142 @@
+.bha-pet-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.bha-pet-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Base Idle Floating */
+.bha-pet--idle .bha-pet-svg {
+  animation: petFloat 3s ease-in-out infinite;
+}
+
+/* Happy Bouncing */
+.bha-pet--happy .bha-pet-svg {
+  animation: petBounce 0.6s ease-in-out infinite alternate;
+}
+
+/* Thinking Hover & Pulse */
+.bha-pet--thinking .bha-pet-svg {
+  animation: petThink 2s ease-in-out infinite;
+}
+
+/* Alert Shake */
+.bha-pet--alert .bha-pet-svg {
+  animation: petAlert 0.4s ease-in-out;
+}
+
+/* Sleepy Slow Breath */
+.bha-pet--sleepy .bha-pet-svg {
+  animation: petSleep 4s ease-in-out infinite;
+  opacity: 0.85;
+}
+
+/* Tail Wag */
+.bha-tail {
+  transform-origin: 30px 66px;
+  animation: tailWag 0.8s ease-in-out infinite alternate;
+}
+
+/* Wing Flap */
+.bha-wing--left {
+  transform-origin: 50px 48px;
+  animation: flapLeft 0.3s ease-in-out infinite alternate;
+}
+
+.bha-wing--right {
+  transform-origin: 50px 48px;
+  animation: flapRight 0.3s ease-in-out infinite alternate;
+}
+
+/* Speech Bubble */
+.bha-pet__speech {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  color: var(--text);
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 10;
+  animation: speechPop 0.2s var(--ease-out);
+}
+
+.bha-pet__speech-arrow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: var(--primary) transparent transparent;
+}
+
+@keyframes petFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes petBounce {
+  0% { transform: translateY(0) scale(1, 1); }
+  100% { transform: translateY(-12px) scale(0.95, 1.05); }
+}
+
+@keyframes petThink {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.04); }
+}
+
+@keyframes petAlert {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes petSleep {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(3px) scale(0.98); }
+}
+
+@keyframes tailWag {
+  0% { transform: rotate(-10deg); }
+  100% { transform: rotate(15deg); }
+}
+
+@keyframes flapLeft {
+  0% { transform: rotate(-5deg); }
+  100% { transform: rotate(15deg); }
+}
+
+@keyframes flapRight {
+  0% { transform: rotate(5deg); }
+  100% { transform: rotate(-15deg); }
+}
+
+@keyframes speechPop {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bha-pet-svg,
+  .bha-tail,
+  .bha-wing--left,
+  .bha-wing--right {
+    animation: none !important;
+  }
+}

@@ -102,8 +102,28 @@
 - **Open Issues:** None
 
 ## Brick 7 & 8: Hints & Living SVG Pet Companion
-- **Status:** In Progress
+- **Status:** Complete ✅
 - **Started:** 2026-10-08 12:09 IST
+- **Completed:** 2026-10-08 12:15 IST
+- **Decisions:**
+  - 100% parametric inline SVG `PetCompanion` supporting 3 distinct species (Fire Beetle, Byte Moth, Glitch Hound), 4 evolution stages, 5 moods (`idle`, `happy`, `thinking`, `alert`, `sleepy`), and cosmetics (hat, visor glasses, crown)
+  - Pet interactions: feeding costs 5 Bug Bits (+20 Happiness), petting earns +1 Bug Bit (up to 3x/day)
+  - Dedicated Pet Den sanctuary screen (`src/screens/PetDen/PetDenScreen.tsx`) with happiness meter and wardrobe
+  - Arena integration: Pet assists in debugging with speech bubbles and reactive moods on correct/wrong guesses
+  - Fully accessible with keyboard navigation and prefers-reduced-motion support
+- **Done:**
+  - [x] Parametric SVG PetCompanion component (`src/components/PetCompanion.tsx`)
+  - [x] PetDenScreen with feeding, petting, and wardrobe (`src/screens/PetDen/PetDenScreen.tsx`)
+  - [x] Wired PetDen into `/pet` hash route
+  - [x] Embedded interactive pet in ArenaScreen with dynamic mood triggers
+  - [x] 6 new pet tests passing (54 tests total)
+  - [x] Presubmit gate 100% green
+- **Open Issues:** None
+
+## Brick 9 & 10: Daily Hunt, Bug Dex & Badges
+- **Status:** In Progress
+- **Started:** 2026-10-08 12:15 IST
+
 
 
 
