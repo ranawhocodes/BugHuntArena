@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ArenaScreen } from '../../src/screens/Arena/ArenaScreen';
 import { AppStateProvider } from '../../src/app/AppState';
@@ -12,6 +12,9 @@ function renderArena() {
 }
 
 describe('Arena Gameplay End-to-End Loop (Bricks 5 & 6)', () => {
+  beforeEach(() => {
+    window.location.hash = '';
+  });
   it('renders Arena header, tabs, mission brief, and code viewer', () => {
     renderArena();
 

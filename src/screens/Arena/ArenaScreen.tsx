@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import type { Language, BugPuzzle } from '../../content/types';
 import { getPuzzlesByLanguage } from '../../content/puzzles';
 import { CodeViewer } from '../../components/CodeViewer';
@@ -18,10 +18,23 @@ import './ArenaScreen.css';
 
 type HuntPhase = 'FIND_LINE' | 'FIX_BUG' | 'REVEAL';
 
-export function ArenaScreen() {
+function parseInitialLanguage(): Language {
+  if (typeof window !== 'undefined') {
+    const hash = window.location.hash || '';
+    if (hash.includes('lang=javascript')) return 'javascript';
+    if (hash.includes('lang=python')) return 'python';
+  }
+  return 'python';
+}
+
+export interface ArenaScreenProps {
+  initialLanguage?: Language;
+}
+
+export function ArenaScreen({ initialLanguage }: ArenaScreenProps = {}) {
   const { state, recordPuzzleCompletion } = useAppState();
 
-  const [language, setLanguage] = useState<Language>('python');
+  const [language, setLanguage] = useState<Language>(() => initialLanguage || parseInitialLanguage());
   const [puzzleIndex, setPuzzleIndex] = useState(0);
   const [customAiPuzzle, setCustomAiPuzzle] = useState<BugPuzzle | null>(null);
   const [isGeneratingAi, setIsGeneratingAi] = useState(false);
@@ -67,8 +80,28 @@ export function ArenaScreen() {
       setPuzzleIndex(0);
       setCustomAiPuzzle(null);
       resetForPuzzle();
+      window.location.hash = `#/play?lang=${newLang}`;
     }
   };
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash || '';
+      if (hash.includes('lang=javascript') && language !== 'javascript') {
+        setLanguage('javascript');
+        setPuzzleIndex(0);
+        setCustomAiPuzzle(null);
+        resetForPuzzle();
+      } else if (hash.includes('lang=python') && language !== 'python') {
+        setLanguage('python');
+        setPuzzleIndex(0);
+        setCustomAiPuzzle(null);
+        resetForPuzzle();
+      }
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, [language, resetForPuzzle]);
 
   const handleNextPuzzle = () => {
     setCustomAiPuzzle(null);

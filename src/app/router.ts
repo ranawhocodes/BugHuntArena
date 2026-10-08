@@ -7,8 +7,9 @@ const VALID_ROUTES: Route[] = ['/', '/play', '/daily', '/profile', '/pet', '/abo
 
 /** Parse the current hash into a Route, defaulting to '/' */
 function parseHash(): Route {
-  const hash = window.location.hash.replace('#', '') || '/';
-  return VALID_ROUTES.includes(hash as Route) ? (hash as Route) : '/';
+  const rawHash = window.location.hash.replace('#', '') || '/';
+  const path = rawHash.split('?')[0];
+  return VALID_ROUTES.includes(path as Route) ? (path as Route) : '/';
 }
 
 /**
@@ -16,7 +17,10 @@ function parseHash(): Route {
  * Returns the current route and a navigate function.
  * Per spec Section 7.1: ~50 lines, no router library.
  */
-export function useRouter(): { route: Route; navigate: (to: Route) => void } {
+export function useRouter(): {
+  route: Route;
+  navigate: (to: Route, query?: Record<string, string>) => void;
+} {
   const [route, setRoute] = useState<Route>(parseHash);
 
   useEffect(() => {
@@ -37,8 +41,13 @@ export function useRouter(): { route: Route; navigate: (to: Route) => void } {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
-  const navigate = useCallback((to: Route) => {
-    window.location.hash = `#${to}`;
+  const navigate = useCallback((to: Route, query?: Record<string, string>) => {
+    if (query && Object.keys(query).length > 0) {
+      const q = new URLSearchParams(query).toString();
+      window.location.hash = `#${to}?${q}`;
+    } else {
+      window.location.hash = `#${to}`;
+    }
   }, []);
 
   return { route, navigate };

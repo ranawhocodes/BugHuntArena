@@ -5,7 +5,7 @@ import type { Route } from '../../app/router';
 import './HomeScreen.css';
 
 interface HomeScreenProps {
-  onNavigate: (route: Route) => void;
+  onNavigate: (route: Route, query?: Record<string, string>) => void;
 }
 
 export function HomeScreen({ onNavigate }: HomeScreenProps) {
@@ -54,10 +54,10 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
           variant="interactive"
           padding="md"
           className="mode-card mode-card--python"
-          onClick={() => onNavigate('/play')}
+          onClick={() => onNavigate('/play', { lang: 'python' })}
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => e.key === 'Enter' && onNavigate('/play')}
+          onKeyDown={(e) => e.key === 'Enter' && onNavigate('/play', { lang: 'python' })}
           aria-label="Practice Python bugs"
         >
           <div className="mode-card__icon" aria-hidden="true">🐍</div>
@@ -77,10 +77,10 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
           variant="interactive"
           padding="md"
           className="mode-card mode-card--js"
-          onClick={() => onNavigate('/play')}
+          onClick={() => onNavigate('/play', { lang: 'javascript' })}
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => e.key === 'Enter' && onNavigate('/play')}
+          onKeyDown={(e) => e.key === 'Enter' && onNavigate('/play', { lang: 'javascript' })}
           aria-label="Practice JavaScript bugs"
         >
           <div className="mode-card__icon" aria-hidden="true">⚡</div>

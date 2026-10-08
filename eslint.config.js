@@ -30,6 +30,7 @@ export default [
         Request: 'readonly',
         Response: 'readonly',
         URL: 'readonly',
+        URLSearchParams: 'readonly',
         HTMLElement: 'readonly',
         HTMLButtonElement: 'readonly',
         HTMLInputElement: 'readonly',
