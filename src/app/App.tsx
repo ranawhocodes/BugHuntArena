@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useRouter } from './router';
 import type { Route } from './router';
+import { AppStateProvider, useAppState } from './AppState';
+import { calculateLevel } from '../engine/engine';
 import { TopBar } from '../components/TopBar';
 import { HomeScreen } from '../screens/Home/HomeScreen';
 import { AboutScreen } from '../screens/About/AboutScreen';
@@ -40,8 +42,11 @@ function PlaceholderScreen({
   );
 }
 
-export function App() {
+function AppContent() {
   const { route, navigate } = useRouter();
+  const { state } = useAppState();
+
+  const levelInfo = calculateLevel(state.xp);
 
   // Update document title on route change
   useEffect(() => {
@@ -60,9 +65,9 @@ export function App() {
       <TopBar
         currentRoute={route}
         onNavigate={navigate}
-        streakDays={3}
-        level={1}
-        bugBits={50}
+        streakDays={state.streakDays}
+        level={levelInfo.level}
+        bugBits={state.bugBits}
       />
 
       <main id="main-content" role="main">
@@ -70,7 +75,7 @@ export function App() {
         {route === '/play' && (
           <PlaceholderScreen
             title="Arena (Free Play)"
-            subtitle="Assembling puzzles and game engine in Brick 2..."
+            subtitle="Entering Core Gameplay in Brick 5..."
             icon="⚔️"
           />
         )}
@@ -127,5 +132,13 @@ export function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <AppStateProvider>
+      <AppContent />
+    </AppStateProvider>
   );
 }

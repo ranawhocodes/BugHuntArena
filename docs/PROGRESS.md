@@ -59,8 +59,28 @@
 - **Open Issues:** None
 
 ## Brick 3 & 4: Game Engine & Storage Resilience
-- **Status:** In Progress
+- **Status:** Complete ✅
 - **Started:** 2026-10-08 11:58 IST
+- **Completed:** 2026-10-08 12:02 IST
+- **Decisions:**
+  - Pure engine functions for XP (streak bonus up to 25%, hint penalties 15/30/45%), Bug Bits (1:5 ratio + clean catch), Level formulas, timezone-safe streak updates with freeze shields
+  - Deterministic pseudo-random Mulberry32 algorithm for daily puzzle selection by date string seed
+  - Resilient storage manager (`bha:v1`) with corruption recovery, size check (< 200 KB), and hostile data prevention
+  - Global `AppStateProvider` context syncing game state to local storage
+  - Engine test coverage: **98.2% lines, 90.9% branches** (exceeds ≥ 80% hackathon threshold)
+- **Done:**
+  - [x] Pure engine functions (`src/engine/engine.ts`)
+  - [x] Storage schema & default initial state (`src/storage/schema.ts`)
+  - [x] Resilient storage loader/writer (`src/storage/storage.ts`)
+  - [x] AppState context & actions (`src/app/AppState.tsx`)
+  - [x] 21 new engine & storage tests passing (44 tests total)
+  - [x] Presubmit gate 100% green
+- **Open Issues:** None
+
+## Brick 5 & 6: Arena Find Bug & Fix Step [END-TO-END PLAYABLE]
+- **Status:** In Progress
+- **Started:** 2026-10-08 12:02 IST
+
 
 
 
