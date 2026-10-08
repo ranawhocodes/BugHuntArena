@@ -15,17 +15,17 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
       <section className="home-hero" aria-labelledby="hero-title">
         <div className="home-hero__badge">
           <Badge variant="primary" size="md">
-            ✨ AI-Powered Debugging Arena
+            Interactive Bug-Hunting Gym · Python &amp; JavaScript
           </Badge>
         </div>
         <h1 id="hero-title" className="home-hero__title">
-          Hunt The Bugs.
+          Hunt the bugs.
           <br />
-          <span className="home-hero__title-gradient">Master The Code.</span>
+          <span className="home-hero__title-gradient">Master the code.</span>
         </h1>
         <p className="home-hero__subtitle">
           Step into the battleground where AI crafts tricky Python and JavaScript bugs.
-          Find the broken line, choose the right fix, earn XP, and evolve your pet companion.
+          Find the broken line, choose the right fix, earn XP, and evolve your companion pet.
         </p>
 
         <div className="home-hero__actions">
@@ -104,7 +104,10 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
         </h2>
         <div className="how-grid">
           <Card variant="glass" padding="md" className="how-step">
-            <div className="how-step__num" aria-hidden="true">01</div>
+            <div className="how-step__indicator">
+              <span className="how-step__pill">Phase 1</span>
+              <span className="how-step__icon" aria-hidden="true">🎯</span>
+            </div>
             <h3 className="how-step__title">Locate The Broken Line</h3>
             <p className="how-step__desc">
               Compare the expected output with actual error logs. Inspect code with keyboard or touch to click the guilty line.
@@ -112,7 +115,10 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
           </Card>
 
           <Card variant="glass" padding="md" className="how-step">
-            <div className="how-step__num" aria-hidden="true">02</div>
+            <div className="how-step__indicator">
+              <span className="how-step__pill">Phase 2</span>
+              <span className="how-step__icon" aria-hidden="true">🔧</span>
+            </div>
             <h3 className="how-step__title">Deploy The Fix</h3>
             <p className="how-step__desc">
               Choose the correct fix from 4 options. Watch out for realistic distractors designed to test your deep understanding!
@@ -120,8 +126,11 @@ export function HomeScreen({ onNavigate }: HomeScreenProps) {
           </Card>
 
           <Card variant="glass" padding="md" className="how-step">
-            <div className="how-step__num" aria-hidden="true">03</div>
-            <h3 className="how-step__title">Capture & Level Up</h3>
+            <div className="how-step__indicator">
+              <span className="how-step__pill">Phase 3</span>
+              <span className="how-step__icon" aria-hidden="true">✨</span>
+            </div>
+            <h3 className="how-step__title">Capture &amp; Level Up</h3>
             <p className="how-step__desc">
               Trap the bug creature in your Bug Dex, earn XP and Bug Bits, level up your rank, and feed your growing companion pet!
             </p>

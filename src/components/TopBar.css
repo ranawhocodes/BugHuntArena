@@ -148,12 +148,30 @@
   .bha-topbar__logo-title {
     display: none;
   }
+}
 
-  .bha-topbar__nav-link span:not([aria-hidden='true']) {
+@media (max-width: 640px) {
+  .bha-topbar__inner {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-2);
+  }
+
+  .bha-topbar__nav-label {
     display: none;
   }
 
   .bha-topbar__nav-link {
     padding: var(--space-2);
+    min-width: 36px;
+    justify-content: center;
+  }
+
+  .bha-topbar__stats {
+    gap: 4px;
+  }
+
+  .bha-stat-pill {
+    padding: 2px 7px;
+    font-size: 0.7rem;
   }
 }

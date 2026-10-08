@@ -76,8 +76,11 @@ export function TopBar({
               }`}
               onClick={() => onNavigate('/play')}
               aria-current={currentRoute === '/play' ? 'page' : undefined}
+              aria-label="Arena"
+              title="Arena"
             >
-              <span aria-hidden="true">⚔️</span> Arena
+              <span aria-hidden="true">⚔️</span>
+              <span className="bha-topbar__nav-label">Arena</span>
             </button>
             <button
               type="button"
@@ -86,8 +89,11 @@ export function TopBar({
               }`}
               onClick={() => onNavigate('/daily')}
               aria-current={currentRoute === '/daily' ? 'page' : undefined}
+              aria-label="Daily Challenge"
+              title="Daily Challenge"
             >
-              <span aria-hidden="true">📅</span> Daily
+              <span aria-hidden="true">📅</span>
+              <span className="bha-topbar__nav-label">Daily</span>
             </button>
             <button
               type="button"
@@ -96,8 +102,11 @@ export function TopBar({
               }`}
               onClick={() => onNavigate('/pet')}
               aria-current={currentRoute === '/pet' ? 'page' : undefined}
+              aria-label="Pet Den"
+              title="Pet Den"
             >
-              <span aria-hidden="true">🐾</span> Pet
+              <span aria-hidden="true">🐾</span>
+              <span className="bha-topbar__nav-label">Pet</span>
             </button>
             <button
               type="button"
@@ -106,8 +115,11 @@ export function TopBar({
               }`}
               onClick={() => onNavigate('/profile')}
               aria-current={currentRoute === '/profile' ? 'page' : undefined}
+              aria-label="Hunter Profile"
+              title="Hunter Profile"
             >
-              <span aria-hidden="true">👤</span> Profile
+              <span aria-hidden="true">👤</span>
+              <span className="bha-topbar__nav-label">Profile</span>
             </button>
           </nav>
 
